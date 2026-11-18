@@ -40,12 +40,26 @@ public class Vehicle extends Asset{
     }
 //endregion
     @Override
-    public BigDecimal getValue(){
+    public BigDecimal getValue() {
         int currentYear = LocalDateTime.now().getYear();
         int age = currentYear - year;
-        if (year <= 3){
-            BigDecimal vehicleValue =
+        BigDecimal value = BigDecimal.ZERO;
+        if (age <= 3) {
+            BigDecimal valueReduction = getOriginalCost().multiply(new BigDecimal("0.03"));
+            value = getOriginalCost().subtract(valueReduction);
+        } else if (age <= 6) {
+            BigDecimal valueReduction = getOriginalCost().multiply(new BigDecimal("0.06"));
+            value = getOriginalCost().subtract(valueReduction);
+        } else if (age <= 7 && age <= 10) {
+            BigDecimal valueReduction = getOriginalCost().multiply(new BigDecimal("0.08"));
+            value = getOriginalCost().subtract(valueReduction);
+        } else value = new BigDecimal("1000.00");
+
+        if (this.odometer > 100_000){
+            if(!(this.makeModel.contains("Honda") || this.makeModel.contains("Toyata"))){
+            }
         }
+    return value;
     }
 
 }
